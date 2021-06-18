@@ -1,0 +1,2 @@
+rootProject.name = "CallsGuard"
+include ':app'

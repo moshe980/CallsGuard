@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "789674886292",
+    "firebase_url": "https://calls-guard-default-rtdb.firebaseio.com",
+    "project_id": "calls-guard",
+    "storage_bucket": "calls-guard.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789674886292:android:75ee2e9a7efb13272be081",
+        "android_client_info": {
+          "package_name": "com.example.callsguard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789674886292-t56bs6lmfcigkg1o5icclu6qjrvepcnd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFRp3IMmszfbiFlk8LJ-ph8SJqvS5joIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789674886292-t56bs6lmfcigkg1o5icclu6qjrvepcnd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
