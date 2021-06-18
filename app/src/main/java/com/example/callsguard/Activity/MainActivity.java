@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
     private void requestWithExplainDialog() {
         AlertDialog alertDialog =
                 new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("Need permission for send your code")
+                        .setMessage("Need permissions for use this App")
                         .setCancelable(false)
                         .setPositiveButton(getString(android.R.string.ok),
                                 new DialogInterface.OnClickListener() {
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        String message = "Setting screen if user have permanently disable the permission by clicking Don't ask again checkbox.";
+        String message = "Go to Settings and Grant the permission to use this App.";
         AlertDialog alertDialog =
                 new AlertDialog.Builder(MainActivity.this)
                         .setMessage(message)
@@ -274,11 +274,6 @@ public class MainActivity extends AppCompatActivity {
                         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
                             Log.d("pttt", "action ! !");
                             getContact();
-                        } else {
-                            // getPermissions(Manifest.permission.READ_CONTACTS);
-                            // getPermissions(Manifest.permission.READ_PHONE_STATE);
-                            //  getPermissions(Manifest.permission.READ_CALL_LOG);
-
                         }
                     }
                 }

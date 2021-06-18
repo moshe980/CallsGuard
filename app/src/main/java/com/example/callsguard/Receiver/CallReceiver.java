@@ -40,10 +40,6 @@ public class CallReceiver extends BroadcastReceiver {
         wl.acquire();
 
         if (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
-            myRef = database.getReference(User.getInstance().getId()).child("busy");
-            myRef.setValue(true);
-
-
             myRef = database.getReference();
 
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -53,7 +49,7 @@ public class CallReceiver extends BroadcastReceiver {
                     for (DataSnapshot keyNode : snapshot.getChildren()) {
                         for (DataSnapshot keyNode2 : keyNode.child("contacts").getChildren()) {
                             Contact contact=keyNode2.getValue(Contact.class);
-                            if(User.getInstance().getId().contains(contact.getNumber())){
+                            if(User.getInstance().getId().contains(contact.getNumber())||callingNumber.contains(contact.getNumber())){
                                 contact.setBusy(true);
                                 keyNode2.getRef().setValue(contact);
                             }
@@ -72,9 +68,6 @@ public class CallReceiver extends BroadcastReceiver {
           //  showToast(context, "Call started");
 
         } else if (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_IDLE)) {
-            myRef = database.getReference(User.getInstance().getId()).child("busy");
-            myRef.setValue(false);
-
             myRef = database.getReference();
 
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -112,6 +105,7 @@ public class CallReceiver extends BroadcastReceiver {
 
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        boolean flag=false;
                         for (DataSnapshot keyNode : snapshot.getChildren()) {
                             for (DataSnapshot keyNode2 : keyNode.child("contacts").getChildren()) {
                                 Contact contact=keyNode2.getValue(Contact.class);
@@ -119,9 +113,13 @@ public class CallReceiver extends BroadcastReceiver {
                                     contact.setBusy(true);
                                     keyNode2.getRef().setValue(contact);
                                     showToast(context,contact.getName());
+                                    flag=true;
+                                    break;
                                 }
                             }
-
+                        if (flag){
+                            break;
+                        }
                         }
                     }
 
@@ -136,22 +134,6 @@ public class CallReceiver extends BroadcastReceiver {
     }
 
     void showToast(Context context, String massage) {
-        new AlertDialog.Builder(context)
-                .setTitle("Delete entry")
-                .setMessage("Are you sure you want to delete this entry?")
-
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                    }
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
         Toast toast = Toast.makeText(context, massage, Toast.LENGTH_LONG);
         toast.show();
     }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class User implements Serializable {
     private static User instance;
     private String id;
-    private boolean isBusy;
     private ArrayList<Contact> contacts;
     private int contactsNum;
 
@@ -34,14 +33,6 @@ public class User implements Serializable {
 
     public void setContactsNum(int contactsNum) {
         this.contactsNum = contactsNum;
-    }
-
-    public boolean isBusy() {
-        return isBusy;
-    }
-
-    public void setBusy(boolean busy) {
-        isBusy = busy;
     }
 
     public String getId() {
