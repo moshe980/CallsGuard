@@ -1,11 +1,6 @@
 # CallsGuard
 ## Save yourself from unkown calls!
 
-
-<h1 align="center"><project-name></h1>
-
-<p align="center"><project-description></p>
-
 ## Screenshots
 ![‏‏לכידה](https://user-images.githubusercontent.com/57193257/125167049-3468bf00-e1a7-11eb-93a0-ba2dbbd80df3.PNG)
 ![תמונה4](https://user-images.githubusercontent.com/57193257/125170125-02ab2480-e1b6-11eb-9cca-a4b9cc3ed498.png)
