@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.PowerManager;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,7 +50,7 @@ public class CallReceiver extends BroadcastReceiver {
                     for (DataSnapshot keyNode : snapshot.getChildren()) {
                         for (DataSnapshot keyNode2 : keyNode.child("contacts").getChildren()) {
                             Contact contact=keyNode2.getValue(Contact.class);
-                            if(User.getInstance().getId().contains(contact.getNumber())||callingNumber.contains(contact.getNumber())){
+                            if(PhoneNumberUtils.compare(User.getInstance().getId(),contact.getNumber())||PhoneNumberUtils.compare(callingNumber,contact.getNumber())){
                                 contact.setBusy(true);
                                 keyNode2.getRef().setValue(contact);
                             }
@@ -77,7 +78,7 @@ public class CallReceiver extends BroadcastReceiver {
                     for (DataSnapshot keyNode : snapshot.getChildren()) {
                         for (DataSnapshot keyNode2 : keyNode.child("contacts").getChildren()) {
                             Contact contact=keyNode2.getValue(Contact.class);
-                            if(User.getInstance().getId().contains(contact.getNumber())||callingNumber.contains(contact.getNumber())){
+                            if(PhoneNumberUtils.compare(User.getInstance().getId(),contact.getNumber())||PhoneNumberUtils.compare(callingNumber,contact.getNumber())){
                                 contact.setBusy(false);
                                 keyNode2.getRef().setValue(contact);
                             }
@@ -109,12 +110,16 @@ public class CallReceiver extends BroadcastReceiver {
                         for (DataSnapshot keyNode : snapshot.getChildren()) {
                             for (DataSnapshot keyNode2 : keyNode.child("contacts").getChildren()) {
                                 Contact contact=keyNode2.getValue(Contact.class);
-                                if(callingNumber.contains(contact.getNumber())){
+                                if(PhoneNumberUtils.compare(callingNumber,contact.getNumber())){
                                     contact.setBusy(true);
                                     keyNode2.getRef().setValue(contact);
                                     showToast(context,contact.getName());
                                     flag=true;
                                     break;
+                                }
+                                if(PhoneNumberUtils.compare(User.getInstance().getId(),contact.getNumber())){
+                                    contact.setBusy(true);
+                                    keyNode2.getRef().setValue(contact);
                                 }
                             }
                         if (flag){
@@ -137,4 +142,5 @@ public class CallReceiver extends BroadcastReceiver {
         Toast toast = Toast.makeText(context, massage, Toast.LENGTH_LONG);
         toast.show();
     }
+
 }

@@ -19,15 +19,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.Settings;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.callsguard.Adapter.ContactsAdapter;
 import com.example.callsguard.Class.Contact;
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        showExplainDialog();
         database = FirebaseDatabase.getInstance();
         phoneNumber = getIntent().getStringExtra("phoneNum");
         mRecyclerView = findViewById(R.id.contacts_recyclerView);
@@ -289,4 +294,28 @@ public class MainActivity extends AppCompatActivity {
         return flag;
     }
 
+
+    private void showExplainDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Follow this to make this app work better:");
+
+        WebView wv = new WebView(this);
+        wv.loadUrl("https://dontkillmyapp.com/");
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        Drawable drawable = ContextCompat.getDrawable(MainActivity.this, R.drawable.ic_baseline_check_24);
+        // set the bounds to place the drawable a bit right
+        drawable.setBounds((int) (drawable.getIntrinsicWidth() * 0.5),
+                0, (int) (drawable.getIntrinsicWidth() * 1.5),
+                drawable.getIntrinsicHeight());
+
+        alert.setView(wv);
+        alert.setPositiveButtonIcon(drawable);
+        alert.show();
+    }
 }
